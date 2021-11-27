@@ -1,0 +1,114 @@
+﻿@model PetrolPump.Models.tbl_EmployeeSalary
+@{
+    ViewBag.Title = "Index";
+    PetrolPump.Models.AppSession session;
+}
+
+<style>
+    .hidden {
+        display: none !important;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css" integrity="sha512-bYPO5jmStZ9WI2602V2zaivdAnbAhtfzmxnEGh9RwtlI00I9s8ulGe4oBa5XxiC6tCITJH/QG70jswBhbLkxPw==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha512-AIOTidJAcHBH2G/oZv9viEGXRqDNmfdPVPYOYKGy3fti0xIplnlgMHUGfuNRzC6FkzIo0iIxgFnr9RikFxK+sw==" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha512-f0tzWhCwVFS3WeYaofoLWkTP62ObhewQ1EZn65oSYDZUg1+CyywGKkWzm8BxaJj5HGKI72PnMH9jYyIFz+GH7g==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js" integrity="sha512-L7jgg7T9UbYc7hXogUKssqe1B5MsgrcviNxsRbO53dDSiw/JxuA/4kVQvEORmZJ6Re3fVF3byN5TT7czo9Rdug==" crossorigin="anonymous"></script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Transfer Salary</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Employee")">Employee</a></li>
+                        <li class="breadcrumb-item active">Transfer Salary</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                Transfer Salary
+                            </h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <div class="col-md-12">
+                                <!-- general form elements -->
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Transfer Salary</h3>
+                                    </div>
+                                    @using (Html.BeginForm("TransferSalary", "Employee", new { @class = "form-horizontal" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        string msg = "";
+                                        if (TempData["Result"] != null)
+                                        {
+                                            msg = TempData["Result"].ToString();
+                                        }
+                                        <span style="color:red;text-align:center">@msg</span>
+                                        @*<form class="form-horizontal">*@
+                                        @Html.TextBoxFor(x => x.EmployeeID, new { @Value = ViewBag.ID, @class = "hidden" });
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Date</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.CreatedDate, new { @class = "form-control datetimepicker1", @placeholder = "Salary Date", @required = "required" })
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <span class="float-right">
+                                                <button type="submit" class="btn btn-info">Insert</button>
+                                            </span>
+                                        </div>
+                                        <!-- /.card-footer -->
+                                        @*</form>*@
+                                    }
+                                </div>
+                                <!-- /.card -->
+                                <!-- Form Element sizes -->
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('.datetimepicker1').datetimepicker();
+    })
+</script>

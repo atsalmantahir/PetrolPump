@@ -1,0 +1,149 @@
+﻿@model PetrolPump.Models.tbl_Stock
+@{
+    ViewBag.Title = "Index";
+    PetrolPump.Models.AppSession session;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Sales</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Sales")">Sales</a></li>
+                        <li class="breadcrumb-item active">Add Sales</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                Sales
+                            </h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <div class="col-md-12">
+                                <!-- general form elements -->
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Add Sales</h3>
+                                    </div>
+
+                                    @using (Html.BeginForm("Add", "Sales", new { @class = "form-horizontal" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        string msg = "";
+                                        if (TempData["Result"] != null)
+                                        {
+                                            msg = TempData["Result"].ToString();
+                                        }
+                                        <span style="color:red;text-align:center">@msg</span>
+                                        @*<form class="form-horizontal">*@
+                                        <div class="card-body">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Sensor/Tank</label>
+                                                <div class="col-md-6">
+
+
+                                                    @Html.DropDownListFor(x => x.SensorID, new
+                                                   SelectList(ViewBag.Tank, "SensorID", "TankTitle"), new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(x => x.SensorID, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Fuel Type</label>
+                                                <div class="col-md-6">
+
+                                                    <input type="text" readonly="readonly" class="form-control" id="fuelType" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Customer</label>
+                                                <div class="col-md-6">
+
+                                                    @Html.DropDownListFor(x => x.CustomerID, new
+                                                   SelectList(ViewBag.Customer, "CustomerID", "Title"), new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(x => x.SupplierID, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Quantity</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.Quantity, new { @class = "form-control", @placeholder = "Quantity" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Sale Price</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.SalePrice, new { @class = "form-control", @placeholder = "Sale Price", @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(x => x.SalePrice, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <span class="float-right">
+                                                <button type="submit" class="btn btn-info">Insert</button>
+                                            </span>
+                                        </div>
+                                        <!-- /.card-footer -->
+                                        @*</form>*@
+                                    }
+                                </div>
+                                <!-- /.card -->
+                                <!-- Form Element sizes -->
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<script>
+    function fill(id) {
+        $.ajax({
+            type: "GET",
+            url: 'getTank/'+id,
+            success: function (result) {
+                debugger
+                $('#fuelType').val(result.Title)
+                $('#SalePrice').val(result.TotalAmount)
+            },
+        });
+    }
+    $("#SensorID").change(function () {
+        var id = this.value
+        fill(id)
+    });
+
+    $(document).ready(function () {
+        fill($("#SensorID").val())
+    })
+</script>

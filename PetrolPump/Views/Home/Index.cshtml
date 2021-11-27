@@ -1,0 +1,304 @@
+﻿@model List<PetrolPump.Models.tbl_Pump>
+@{
+    ViewBag.Title = "Index";
+    PetrolPump.Models.AppSession session = (PetrolPump.Models.AppSession)HttpContext.Current.Session["AppSession"];
+    var roleId = session.Role.RoleID;
+    string pumpTitle = "";
+    if (roleId > 1)
+    {
+        pumpTitle = session.User.tbl_Pump.tbl_Company.CompanyName + " - " + session.User.tbl_Pump.Location;
+    }
+    else
+    {
+        pumpTitle = session.Role.RoleSubTitle;
+    }
+    bool canView = false;
+    bool canAdd = false;
+    bool canUpdate = false;
+    bool canDelete = false;
+    var rd = System.Web.HttpContext.Current.Request.RequestContext.RouteData;
+    string currentController = rd.GetRequiredString("controller");
+    var page = session.Page.Find(x => x.PageTitle == currentController);
+    //var permissions = session.Role.tbl_Permission.Where(x => x.PageID == page.PageID && x.RoleID == roleId).FirstOrDefault();
+    //if (permissions.Can_View == true)
+    //{
+    //    canView = true;
+    //}
+    //if (permissions.Can_Add == true)
+    //{
+    //    canAdd = true;
+    //}
+    //if (permissions.Can_Update == true)
+    //{
+    //    canUpdate = true;
+    //}
+    //if (permissions.Can_Delete == true)
+    //{
+    //    canDelete = true;
+    //}
+}
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">@pumpTitle</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3># <span class="pumps"></span></h3>
+
+                            <p>Pumps</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3># <span class="activeSensor"></span></h3>
+
+                            <p>Active Sensors</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning">
+                        <div class="inner">
+                            <h3>Rs <span class="totalPurchases"></span></h3>
+
+                            <p>Total Purchases</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>Rs <span class="totalSales"></span></h3>
+
+                            <p>Total Sales</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+
+
+            <div class="row">
+                
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">Purchases</h3>
+                                    <a href="javascript:void(0);">View Report</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">Rs <span class="totalPurchases"></span></span>
+                                        <span>Purchases Over Time</span>
+                                    </p>
+                                    @*<p class="ml-auto d-flex flex-column text-right">
+                                        <span class="text-success">
+                                            <i class="fas fa-arrow-up"></i> 33.1%
+                                        </span>
+                                        <span class="text-muted">Since last month</span>
+                                    </p>*@
+                                </div>
+                                <!-- /.d-flex -->
+                                <div class="position-relative mb-4">
+                                    <canvas id="puchase-chart"></canvas>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- /.col -->
+                    </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="d-flex justify-content-between">
+                                <h3 class="card-title">Sales</h3>
+                                <a href="javascript:void(0);">View Report</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <p class="d-flex flex-column">
+                                    <span class="text-bold text-lg">Rs <span class="totalSales"></span></span>
+                                    <span>Sales Over Time</span>
+                                </p>
+                                @*<p class="ml-auto d-flex flex-column text-right">
+                                    <span class="text-success">
+                                        <i class="fas fa-arrow-up"></i> 33.1%
+                                    </span>
+                                    <span class="text-muted">Since last month</span>
+                                </p>*@
+                            </div>
+                            <div class="position-relative mb-4">
+                                <canvas id="sales-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- /.content -->
+</div>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    
+
+    function fill() {
+        $.ajax({
+            type: "GET",
+            url: 'Home/Fill',
+            success: function (data) {
+                $('.pumps').html(data.Pumps)
+                $('.activeSensor').html(data.ActiveSensor)
+                $('.totalSales').html(numberWithCommas(parseFloat(data.TotalSales)))
+                $('.totalPurchases').html(numberWithCommas(parseFloat(data.TotalPurchases)))
+            },
+        });
+    }
+
+    function saleChart() {
+        $.ajax({
+            type: "GET",
+            url: 'Home/SaledFuelTypes',
+            success: function (data) {
+                debugger
+
+                new Chart(document.getElementById("sales-chart"), {
+                    type: 'bar',
+                    data: {
+                        labels: data.Title,
+                        datasets: [
+                          {
+                              label: "Total Amount (in Ruppees)",
+                              //backgroundColor: ["red", "blue","yellow","green","pink"],
+                              data: data.TotalAmount
+                          }
+                        ]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Total Sales'
+                        },
+
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+
+                    }
+
+
+                });
+            },
+        });
+    }
+
+    function purchaseChart() {
+        $.ajax({
+            type: "GET",
+            url: 'Home/PurchasedFuelTypes',
+            success: function (data) {
+                debugger
+
+                new Chart(document.getElementById("puchase-chart"), {
+                    type: 'bar',
+                    data: {
+                        labels: data.Title,
+                        datasets: [
+                          {
+                              label: "Total Amount (in Ruppees)",
+                              //backgroundColor: ["red", "blue","yellow","green","pink"],
+                              data: data.TotalAmount
+                          }
+                        ]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Total Purchases'
+                        },
+
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+
+                    }
+
+
+                });
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        fill()
+        saleChart()
+        purchaseChart()
+
+    })
+</script>

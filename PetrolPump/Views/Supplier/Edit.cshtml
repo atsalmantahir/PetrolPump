@@ -1,0 +1,114 @@
+﻿@model PetrolPump.Models.tbl_Supplier
+@{
+    ViewBag.Title = "Index";
+    PetrolPump.Models.AppSession session;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Customer</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Customer")">Supplier</a></li>
+                        <li class="breadcrumb-item active">Edit Supplier</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                Supplier
+                            </h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <div class="col-md-12">
+                                <!-- general form elements -->
+                                <div class="card card-info">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Edit Supplier</h3>
+                                    </div>
+
+                                    @using (Html.BeginForm("Edit", "Supplier", new { @class = "form-horizontal" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(x => x.SupplierID)
+                                        @*<form class="form-horizontal">*@
+                                        <div class="card-body">
+
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Supplier Title</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control", @placeholder = "Supplier" })
+                                                    @Html.ValidationMessageFor(x => x.Title, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Address</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.Address, new { @class = "form-control", @placeholder = "Location" })
+                                                    @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Phome</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @placeholder = "Location" })
+                                                    @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                                <div class="col-md-6">
+                                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Location" })
+                                                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <span class="float-right">
+                                                <button type="submit" class="btn btn-info">Update</button>
+                                            </span>
+                                        </div>
+                                        <!-- /.card-footer -->
+                                        @*</form>*@
+                                    }
+                                </div>
+                                <!-- /.card -->
+                                <!-- Form Element sizes -->
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>

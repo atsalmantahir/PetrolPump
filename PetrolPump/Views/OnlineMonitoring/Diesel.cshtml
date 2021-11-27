@@ -1,0 +1,143 @@
+﻿
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/kelly.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+    fillCharts('diesel')
+    setTimeout(function () {
+        fillCharts('diesel')
+    }, 60000);
+}); // end am4core.ready()
+
+
+
+function fillCharts(t) {
+        $.ajax({
+            type: "GET",
+            url: 'getTanksCapacity?t='+t,
+            success: function (result) {
+				
+				// Themes begin
+				am4core.useTheme(am4themes_kelly);
+				am4core.useTheme(am4themes_animated);
+				// Themes end
+
+				// Create chart instance
+				var chart = am4core.create("chartdiv", am4charts.XYChart3D);
+
+				chart.titles.create().text = "Petrol Tanks";
+				debugger
+
+				chart.data = result;
+
+				// Create axes
+				var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+				categoryAxis.dataFields.category = "category";
+				categoryAxis.renderer.grid.template.location = 0;
+				categoryAxis.renderer.grid.template.strokeOpacity = 0;
+
+				var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+				valueAxis.renderer.grid.template.strokeOpacity = 0;
+				valueAxis.min = -10;
+				valueAxis.max = 110;
+				valueAxis.strictMinMax = true;
+				valueAxis.renderer.baseGrid.disabled = true;
+				valueAxis.renderer.labels.template.adapter.add("text", function(text) {
+				  if ((text > 100) || (text < 0)) {
+					return "";
+				  }
+				  else {
+					return text + "%";
+				  }
+				})
+
+				// Create series
+				var series1 = chart.series.push(new am4charts.ConeSeries());
+				series1.dataFields.valueY = "value1";
+				series1.dataFields.categoryX = "category";
+				series1.columns.template.width = am4core.percent(80);
+				series1.columns.template.fillOpacity = 0.9;
+				series1.columns.template.strokeOpacity = 1;
+				series1.columns.template.strokeWidth = 2;
+
+				var series2 = chart.series.push(new am4charts.ConeSeries());
+				series2.dataFields.valueY = "value2";
+				series2.dataFields.categoryX = "category";
+				series2.stacked = true;
+				series2.columns.template.width = am4core.percent(80);
+				series2.columns.template.fill = am4core.color("#000");
+				series2.columns.template.fillOpacity = 0.1;
+				series2.columns.template.stroke = am4core.color("#000");
+				series2.columns.template.strokeOpacity = 0.2;
+				series2.columns.template.strokeWidth = 2;
+
+            },
+			error: function() {
+				return false
+			}
+        });
+}
+
+
+</script>
+
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Online Monitoring</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="breadcrumb-item active">Online Monitoring</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                Diesel Tanks
+                            </h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- HTML -->
+                            <div id="chartdiv"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>

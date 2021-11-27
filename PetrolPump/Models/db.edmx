@@ -1,0 +1,1172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PetrolPumpDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="150" />
+          <Property Name="CompanyLogo" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="350" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="350" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="350" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="350" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="350" />
+          <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbl_EmployeeSalary">
+          <Key>
+            <PropertyRef Name="SalaryID" />
+          </Key>
+          <Property Name="SalaryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsPaid" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Expense">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="350" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_FuelType">
+          <Key>
+            <PropertyRef Name="FuelTypeID" />
+          </Key>
+          <Property Name="FuelTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FuelType" Type="nvarchar" MaxLength="150" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SalePrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbl_Page">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PageTitle" Type="nvarchar" MaxLength="350" />
+          <Property Name="PageSubTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="NavIcon" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tbl_Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="PageID" Type="int" Nullable="false" />
+          <Property Name="Can_View" Type="bit" />
+          <Property Name="Can_Add" Type="bit" />
+          <Property Name="Can_Update" Type="bit" />
+          <Property Name="Can_Delete" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Pump">
+          <Key>
+            <PropertyRef Name="PumpID" />
+          </Key>
+          <Property Name="PumpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_PumpFuelType">
+          <Key>
+            <PropertyRef Name="PumpFuelTypeID" />
+          </Key>
+          <Property Name="PumpFuelTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" Nullable="false" />
+          <Property Name="FuelTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleTitle" Type="nvarchar" MaxLength="350" />
+          <Property Name="RoleSubTitle" Type="nvarchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="tbl_Sensor">
+          <Key>
+            <PropertyRef Name="SensorID" />
+          </Key>
+          <Property Name="SensorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" Nullable="false" />
+          <Property Name="FuelTypeID" Type="int" />
+          <Property Name="SensorMAC" Type="nvarchar" MaxLength="150" />
+          <Property Name="TankTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="TankCapacity" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="FuelPresents" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Stock">
+          <Key>
+            <PropertyRef Name="StockID" />
+          </Key>
+          <Property Name="StockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderType" Type="nvarchar" MaxLength="350" />
+          <Property Name="SensorID" Type="int" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="IsPurchased" Type="bit" />
+          <Property Name="CustomerID" Type="int" />
+          <Property Name="IsSaled" Type="bit" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="SalePrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="tbl_Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PumpID" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="350" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="350" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="250" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="350" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="350" />
+          <Property Name="Email" Type="nvarchar" MaxLength="350" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="350" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="Password" Type="nvarchar" MaxLength="500" />
+          <Property Name="PumpID" Type="int" />
+        </EntityType>
+        <Association Name="FK__tbl_User__PumpID__4316F928">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="0..1" />
+          <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_User__PumpID__534D60F1">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="0..1" />
+          <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Employee_tbl_Pump">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="0..1" />
+          <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Employee">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_EmployeeSalary_tbl_Employee">
+          <End Role="tbl_Employee" Type="Self.tbl_Employee" Multiplicity="1" />
+          <End Role="tbl_EmployeeSalary" Type="Self.tbl_EmployeeSalary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tbl_EmployeeSalary">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Expense_tbl_Pump">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="1" />
+          <End Role="tbl_Expense" Type="Self.tbl_Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Expense">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Permission_tbl_Page">
+          <End Role="tbl_Page" Type="Self.tbl_Page" Multiplicity="1" />
+          <End Role="tbl_Permission" Type="Self.tbl_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Page">
+              <PropertyRef Name="PageID" />
+            </Principal>
+            <Dependent Role="tbl_Permission">
+              <PropertyRef Name="PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Permission_tbl_Permission">
+          <End Role="tbl_Role" Type="Self.tbl_Role" Multiplicity="1" />
+          <End Role="tbl_Permission" Type="Self.tbl_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="tbl_Permission">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Pump_tbl_Company">
+          <End Role="tbl_Company" Type="Self.tbl_Company" Multiplicity="1" />
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="tbl_Pump">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PumpFuelType_tbl_FuelType">
+          <End Role="tbl_FuelType" Type="Self.tbl_FuelType" Multiplicity="0..1" />
+          <End Role="tbl_PumpFuelType" Type="Self.tbl_PumpFuelType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_FuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Principal>
+            <Dependent Role="tbl_PumpFuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PumpFuelType_tbl_Pump">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="1" />
+          <End Role="tbl_PumpFuelType" Type="Self.tbl_PumpFuelType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_PumpFuelType">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Sensor_tbl_FuelType">
+          <End Role="tbl_FuelType" Type="Self.tbl_FuelType" Multiplicity="0..1" />
+          <End Role="tbl_Sensor" Type="Self.tbl_Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_FuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Principal>
+            <Dependent Role="tbl_Sensor">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Sensor_tbl_Pump">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="1" />
+          <End Role="tbl_Sensor" Type="Self.tbl_Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Sensor">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Customer">
+          <End Role="tbl_Customer" Type="Self.tbl_Customer" Multiplicity="0..1" />
+          <End Role="tbl_Stock" Type="Self.tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Sensor">
+          <End Role="tbl_Sensor" Type="Self.tbl_Sensor" Multiplicity="0..1" />
+          <End Role="tbl_Stock" Type="Self.tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Sensor">
+              <PropertyRef Name="SensorID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="SensorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Supplier">
+          <End Role="tbl_Supplier" Type="Self.tbl_Supplier" Multiplicity="0..1" />
+          <End Role="tbl_Stock" Type="Self.tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Supplier_tbl_Pump">
+          <End Role="tbl_Pump" Type="Self.tbl_Pump" Multiplicity="0..1" />
+          <End Role="tbl_Supplier" Type="Self.tbl_Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Supplier">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_User_tbl_Role">
+          <End Role="tbl_Role" Type="Self.tbl_Role" Multiplicity="1" />
+          <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PetrolPumpDbModelStoreContainer">
+          <EntitySet Name="tbl_Company" EntityType="Self.tbl_Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Customer" EntityType="Self.tbl_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Employee" EntityType="Self.tbl_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EmployeeSalary" EntityType="Self.tbl_EmployeeSalary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Expense" EntityType="Self.tbl_Expense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_FuelType" EntityType="Self.tbl_FuelType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Page" EntityType="Self.tbl_Page" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Permission" EntityType="Self.tbl_Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Pump" EntityType="Self.tbl_Pump" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PumpFuelType" EntityType="Self.tbl_PumpFuelType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Role" EntityType="Self.tbl_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Sensor" EntityType="Self.tbl_Sensor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Stock" EntityType="Self.tbl_Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Supplier" EntityType="Self.tbl_Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_User__PumpID__4316F928" Association="Self.FK__tbl_User__PumpID__4316F928">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_User__PumpID__534D60F1" Association="Self.FK__tbl_User__PumpID__534D60F1">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Employee_tbl_Pump" Association="Self.FK_tbl_Employee_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_EmployeeSalary_tbl_Employee" Association="Self.FK_tbl_EmployeeSalary_tbl_Employee">
+            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+            <End Role="tbl_EmployeeSalary" EntitySet="tbl_EmployeeSalary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Expense_tbl_Pump" Association="Self.FK_tbl_Expense_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Expense" EntitySet="tbl_Expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Permission_tbl_Page" Association="Self.FK_tbl_Permission_tbl_Page">
+            <End Role="tbl_Page" EntitySet="tbl_Page" />
+            <End Role="tbl_Permission" EntitySet="tbl_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Permission_tbl_Permission" Association="Self.FK_tbl_Permission_tbl_Permission">
+            <End Role="tbl_Role" EntitySet="tbl_Role" />
+            <End Role="tbl_Permission" EntitySet="tbl_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Pump_tbl_Company" Association="Self.FK_tbl_Pump_tbl_Company">
+            <End Role="tbl_Company" EntitySet="tbl_Company" />
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PumpFuelType_tbl_FuelType" Association="Self.FK_tbl_PumpFuelType_tbl_FuelType">
+            <End Role="tbl_FuelType" EntitySet="tbl_FuelType" />
+            <End Role="tbl_PumpFuelType" EntitySet="tbl_PumpFuelType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PumpFuelType_tbl_Pump" Association="Self.FK_tbl_PumpFuelType_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_PumpFuelType" EntitySet="tbl_PumpFuelType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Sensor_tbl_FuelType" Association="Self.FK_tbl_Sensor_tbl_FuelType">
+            <End Role="tbl_FuelType" EntitySet="tbl_FuelType" />
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Sensor_tbl_Pump" Association="Self.FK_tbl_Sensor_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Customer" Association="Self.FK_tbl_Stock_tbl_Customer">
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Sensor" Association="Self.FK_tbl_Stock_tbl_Sensor">
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Supplier" Association="Self.FK_tbl_Stock_tbl_Supplier">
+            <End Role="tbl_Supplier" EntitySet="tbl_Supplier" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Supplier_tbl_Pump" Association="Self.FK_tbl_Supplier_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Supplier" EntitySet="tbl_Supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_User_tbl_Role" Association="Self.FK_tbl_User_tbl_Role">
+            <End Role="tbl_Role" EntitySet="tbl_Role" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PetrolPumpDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PetrolPumpDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_Company" EntityType="PetrolPumpDbModel.tbl_Company" />
+          <EntitySet Name="tbl_Customer" EntityType="PetrolPumpDbModel.tbl_Customer" />
+          <EntitySet Name="tbl_Employee" EntityType="PetrolPumpDbModel.tbl_Employee" />
+          <EntitySet Name="tbl_EmployeeSalary" EntityType="PetrolPumpDbModel.tbl_EmployeeSalary" />
+          <EntitySet Name="tbl_Expense" EntityType="PetrolPumpDbModel.tbl_Expense" />
+          <EntitySet Name="tbl_FuelType" EntityType="PetrolPumpDbModel.tbl_FuelType" />
+          <EntitySet Name="tbl_Page" EntityType="PetrolPumpDbModel.tbl_Page" />
+          <EntitySet Name="tbl_Permission" EntityType="PetrolPumpDbModel.tbl_Permission" />
+          <EntitySet Name="tbl_Pump" EntityType="PetrolPumpDbModel.tbl_Pump" />
+          <EntitySet Name="tbl_PumpFuelType" EntityType="PetrolPumpDbModel.tbl_PumpFuelType" />
+          <EntitySet Name="tbl_Role" EntityType="PetrolPumpDbModel.tbl_Role" />
+          <EntitySet Name="tbl_Sensor" EntityType="PetrolPumpDbModel.tbl_Sensor" />
+          <EntitySet Name="tbl_Stock" EntityType="PetrolPumpDbModel.tbl_Stock" />
+          <EntitySet Name="tbl_Supplier" EntityType="PetrolPumpDbModel.tbl_Supplier" />
+          <EntitySet Name="tbl_User" EntityType="PetrolPumpDbModel.tbl_User" />
+          <AssociationSet Name="FK_tbl_Pump_tbl_Company" Association="PetrolPumpDbModel.FK_tbl_Pump_tbl_Company">
+            <End Role="tbl_Company" EntitySet="tbl_Company" />
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Customer" Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Customer">
+            <End Role="tbl_Customer" EntitySet="tbl_Customer" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Employee_tbl_Pump" Association="PetrolPumpDbModel.FK_tbl_Employee_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_EmployeeSalary_tbl_Employee" Association="PetrolPumpDbModel.FK_tbl_EmployeeSalary_tbl_Employee">
+            <End Role="tbl_Employee" EntitySet="tbl_Employee" />
+            <End Role="tbl_EmployeeSalary" EntitySet="tbl_EmployeeSalary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Expense_tbl_Pump" Association="PetrolPumpDbModel.FK_tbl_Expense_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Expense" EntitySet="tbl_Expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PumpFuelType_tbl_FuelType" Association="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_FuelType">
+            <End Role="tbl_FuelType" EntitySet="tbl_FuelType" />
+            <End Role="tbl_PumpFuelType" EntitySet="tbl_PumpFuelType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Sensor_tbl_FuelType" Association="PetrolPumpDbModel.FK_tbl_Sensor_tbl_FuelType">
+            <End Role="tbl_FuelType" EntitySet="tbl_FuelType" />
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Permission_tbl_Page" Association="PetrolPumpDbModel.FK_tbl_Permission_tbl_Page">
+            <End Role="tbl_Page" EntitySet="tbl_Page" />
+            <End Role="tbl_Permission" EntitySet="tbl_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Permission_tbl_Permission" Association="PetrolPumpDbModel.FK_tbl_Permission_tbl_Permission">
+            <End Role="tbl_Role" EntitySet="tbl_Role" />
+            <End Role="tbl_Permission" EntitySet="tbl_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_User__PumpID__4316F928" Association="PetrolPumpDbModel.FK__tbl_User__PumpID__4316F928">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_User__PumpID__534D60F1" Association="PetrolPumpDbModel.FK__tbl_User__PumpID__534D60F1">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PumpFuelType_tbl_Pump" Association="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_PumpFuelType" EntitySet="tbl_PumpFuelType" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Sensor_tbl_Pump" Association="PetrolPumpDbModel.FK_tbl_Sensor_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Supplier_tbl_Pump" Association="PetrolPumpDbModel.FK_tbl_Supplier_tbl_Pump">
+            <End Role="tbl_Pump" EntitySet="tbl_Pump" />
+            <End Role="tbl_Supplier" EntitySet="tbl_Supplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_User_tbl_Role" Association="PetrolPumpDbModel.FK_tbl_User_tbl_Role">
+            <End Role="tbl_Role" EntitySet="tbl_Role" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Sensor" Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Sensor">
+            <End Role="tbl_Sensor" EntitySet="tbl_Sensor" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Stock_tbl_Supplier" Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Supplier">
+            <End Role="tbl_Supplier" EntitySet="tbl_Supplier" />
+            <End Role="tbl_Stock" EntitySet="tbl_Stock" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tbl_Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLogo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_Pump_tbl_Company" FromRole="tbl_Company" ToRole="tbl_Pump" />
+        </EntityType>
+        <EntityType Name="tbl_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="tbl_Stock" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Customer" FromRole="tbl_Customer" ToRole="tbl_Stock" />
+        </EntityType>
+        <EntityType Name="tbl_Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_Employee_tbl_Pump" FromRole="tbl_Employee" ToRole="tbl_Pump" />
+          <NavigationProperty Name="tbl_EmployeeSalary" Relationship="PetrolPumpDbModel.FK_tbl_EmployeeSalary_tbl_Employee" FromRole="tbl_Employee" ToRole="tbl_EmployeeSalary" />
+        </EntityType>
+        <EntityType Name="tbl_EmployeeSalary">
+          <Key>
+            <PropertyRef Name="SalaryID" />
+          </Key>
+          <Property Name="SalaryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsPaid" Type="Int32" />
+          <NavigationProperty Name="tbl_Employee" Relationship="PetrolPumpDbModel.FK_tbl_EmployeeSalary_tbl_Employee" FromRole="tbl_EmployeeSalary" ToRole="tbl_Employee" />
+        </EntityType>
+        <EntityType Name="tbl_Expense">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_Expense_tbl_Pump" FromRole="tbl_Expense" ToRole="tbl_Pump" />
+        </EntityType>
+        <EntityType Name="tbl_FuelType">
+          <Key>
+            <PropertyRef Name="FuelTypeID" />
+          </Key>
+          <Property Name="FuelTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FuelType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tbl_PumpFuelType" Relationship="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_FuelType" FromRole="tbl_FuelType" ToRole="tbl_PumpFuelType" />
+          <NavigationProperty Name="tbl_Sensor" Relationship="PetrolPumpDbModel.FK_tbl_Sensor_tbl_FuelType" FromRole="tbl_FuelType" ToRole="tbl_Sensor" />
+        </EntityType>
+        <EntityType Name="tbl_Page">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PageTitle" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="PageSubTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="NavIcon" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Permission" Relationship="PetrolPumpDbModel.FK_tbl_Permission_tbl_Page" FromRole="tbl_Page" ToRole="tbl_Permission" />
+        </EntityType>
+        <EntityType Name="tbl_Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="PageID" Type="Int32" Nullable="false" />
+          <Property Name="Can_View" Type="Boolean" />
+          <Property Name="Can_Add" Type="Boolean" />
+          <Property Name="Can_Update" Type="Boolean" />
+          <Property Name="Can_Delete" Type="Boolean" />
+          <NavigationProperty Name="tbl_Page" Relationship="PetrolPumpDbModel.FK_tbl_Permission_tbl_Page" FromRole="tbl_Permission" ToRole="tbl_Page" />
+          <NavigationProperty Name="tbl_Role" Relationship="PetrolPumpDbModel.FK_tbl_Permission_tbl_Permission" FromRole="tbl_Permission" ToRole="tbl_Role" />
+        </EntityType>
+        <EntityType Name="tbl_Pump">
+          <Key>
+            <PropertyRef Name="PumpID" />
+          </Key>
+          <Property Name="PumpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="tbl_Company" Relationship="PetrolPumpDbModel.FK_tbl_Pump_tbl_Company" FromRole="tbl_Pump" ToRole="tbl_Company" />
+          <NavigationProperty Name="tbl_Employee" Relationship="PetrolPumpDbModel.FK_tbl_Employee_tbl_Pump" FromRole="tbl_Pump" ToRole="tbl_Employee" />
+          <NavigationProperty Name="tbl_Expense" Relationship="PetrolPumpDbModel.FK_tbl_Expense_tbl_Pump" FromRole="tbl_Pump" ToRole="tbl_Expense" />
+          <NavigationProperty Name="tbl_User" Relationship="PetrolPumpDbModel.FK__tbl_User__PumpID__4316F928" FromRole="tbl_Pump" ToRole="tbl_User" />
+          <NavigationProperty Name="tbl_User1" Relationship="PetrolPumpDbModel.FK__tbl_User__PumpID__534D60F1" FromRole="tbl_Pump" ToRole="tbl_User" />
+          <NavigationProperty Name="tbl_PumpFuelType" Relationship="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_Pump" FromRole="tbl_Pump" ToRole="tbl_PumpFuelType" />
+          <NavigationProperty Name="tbl_Sensor" Relationship="PetrolPumpDbModel.FK_tbl_Sensor_tbl_Pump" FromRole="tbl_Pump" ToRole="tbl_Sensor" />
+          <NavigationProperty Name="tbl_Supplier" Relationship="PetrolPumpDbModel.FK_tbl_Supplier_tbl_Pump" FromRole="tbl_Pump" ToRole="tbl_Supplier" />
+        </EntityType>
+        <EntityType Name="tbl_PumpFuelType">
+          <Key>
+            <PropertyRef Name="PumpFuelTypeID" />
+          </Key>
+          <Property Name="PumpFuelTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" Nullable="false" />
+          <Property Name="FuelTypeID" Type="Int32" />
+          <NavigationProperty Name="tbl_FuelType" Relationship="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_FuelType" FromRole="tbl_PumpFuelType" ToRole="tbl_FuelType" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_Pump" FromRole="tbl_PumpFuelType" ToRole="tbl_Pump" />
+        </EntityType>
+        <EntityType Name="tbl_Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleTitle" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="RoleSubTitle" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Permission" Relationship="PetrolPumpDbModel.FK_tbl_Permission_tbl_Permission" FromRole="tbl_Role" ToRole="tbl_Permission" />
+          <NavigationProperty Name="tbl_User" Relationship="PetrolPumpDbModel.FK_tbl_User_tbl_Role" FromRole="tbl_Role" ToRole="tbl_User" />
+        </EntityType>
+        <EntityType Name="tbl_Sensor">
+          <Key>
+            <PropertyRef Name="SensorID" />
+          </Key>
+          <Property Name="SensorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" Nullable="false" />
+          <Property Name="FuelTypeID" Type="Int32" />
+          <Property Name="SensorMAC" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TankTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TankCapacity" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="FuelPresents" Type="Int32" />
+          <NavigationProperty Name="tbl_FuelType" Relationship="PetrolPumpDbModel.FK_tbl_Sensor_tbl_FuelType" FromRole="tbl_Sensor" ToRole="tbl_FuelType" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_Sensor_tbl_Pump" FromRole="tbl_Sensor" ToRole="tbl_Pump" />
+          <NavigationProperty Name="tbl_Stock" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Sensor" FromRole="tbl_Sensor" ToRole="tbl_Stock" />
+        </EntityType>
+        <EntityType Name="tbl_Stock">
+          <Key>
+            <PropertyRef Name="StockID" />
+          </Key>
+          <Property Name="StockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderType" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="SensorID" Type="Int32" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="IsPurchased" Type="Boolean" />
+          <Property Name="CustomerID" Type="Int32" />
+          <Property Name="IsSaled" Type="Boolean" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="tbl_Customer" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Customer" FromRole="tbl_Stock" ToRole="tbl_Customer" />
+          <NavigationProperty Name="tbl_Sensor" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Sensor" FromRole="tbl_Stock" ToRole="tbl_Sensor" />
+          <NavigationProperty Name="tbl_Supplier" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Supplier" FromRole="tbl_Stock" ToRole="tbl_Supplier" />
+        </EntityType>
+        <EntityType Name="tbl_Supplier">
+          <Key>
+            <PropertyRef Name="SupplierID" />
+          </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PumpID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK_tbl_Supplier_tbl_Pump" FromRole="tbl_Supplier" ToRole="tbl_Pump" />
+          <NavigationProperty Name="tbl_Stock" Relationship="PetrolPumpDbModel.FK_tbl_Stock_tbl_Supplier" FromRole="tbl_Supplier" ToRole="tbl_Stock" />
+        </EntityType>
+        <EntityType Name="tbl_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PumpID" Type="Int32" />
+          <NavigationProperty Name="tbl_Pump" Relationship="PetrolPumpDbModel.FK__tbl_User__PumpID__4316F928" FromRole="tbl_User" ToRole="tbl_Pump" />
+          <NavigationProperty Name="tbl_Pump1" Relationship="PetrolPumpDbModel.FK__tbl_User__PumpID__534D60F1" FromRole="tbl_User" ToRole="tbl_Pump" />
+          <NavigationProperty Name="tbl_Role" Relationship="PetrolPumpDbModel.FK_tbl_User_tbl_Role" FromRole="tbl_User" ToRole="tbl_Role" />
+        </EntityType>
+        <Association Name="FK_tbl_Pump_tbl_Company">
+          <End Type="PetrolPumpDbModel.tbl_Company" Role="tbl_Company" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="tbl_Pump">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Customer">
+          <End Type="PetrolPumpDbModel.tbl_Customer" Role="tbl_Customer" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Stock" Role="tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Employee_tbl_Pump">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Employee" Role="tbl_Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Employee">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_EmployeeSalary_tbl_Employee">
+          <End Type="PetrolPumpDbModel.tbl_Employee" Role="tbl_Employee" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_EmployeeSalary" Role="tbl_EmployeeSalary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="tbl_EmployeeSalary">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Expense_tbl_Pump">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_Expense" Role="tbl_Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Expense">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PumpFuelType_tbl_FuelType">
+          <End Type="PetrolPumpDbModel.tbl_FuelType" Role="tbl_FuelType" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_PumpFuelType" Role="tbl_PumpFuelType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_FuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Principal>
+            <Dependent Role="tbl_PumpFuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Sensor_tbl_FuelType">
+          <End Type="PetrolPumpDbModel.tbl_FuelType" Role="tbl_FuelType" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Sensor" Role="tbl_Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_FuelType">
+              <PropertyRef Name="FuelTypeID" />
+            </Principal>
+            <Dependent Role="tbl_Sensor">
+              <PropertyRef Name="FuelTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Permission_tbl_Page">
+          <End Type="PetrolPumpDbModel.tbl_Page" Role="tbl_Page" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_Permission" Role="tbl_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Page">
+              <PropertyRef Name="PageID" />
+            </Principal>
+            <Dependent Role="tbl_Permission">
+              <PropertyRef Name="PageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Permission_tbl_Permission">
+          <End Type="PetrolPumpDbModel.tbl_Role" Role="tbl_Role" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_Permission" Role="tbl_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="tbl_Permission">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_User__PumpID__4316F928">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_User" Role="tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_User__PumpID__534D60F1">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_User" Role="tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PumpFuelType_tbl_Pump">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_PumpFuelType" Role="tbl_PumpFuelType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_PumpFuelType">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Sensor_tbl_Pump">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_Sensor" Role="tbl_Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Sensor">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Supplier_tbl_Pump">
+          <End Type="PetrolPumpDbModel.tbl_Pump" Role="tbl_Pump" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Supplier" Role="tbl_Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Pump">
+              <PropertyRef Name="PumpID" />
+            </Principal>
+            <Dependent Role="tbl_Supplier">
+              <PropertyRef Name="PumpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_User_tbl_Role">
+          <End Type="PetrolPumpDbModel.tbl_Role" Role="tbl_Role" Multiplicity="1" />
+          <End Type="PetrolPumpDbModel.tbl_User" Role="tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Sensor">
+          <End Type="PetrolPumpDbModel.tbl_Sensor" Role="tbl_Sensor" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Stock" Role="tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Sensor">
+              <PropertyRef Name="SensorID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="SensorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Stock_tbl_Supplier">
+          <End Type="PetrolPumpDbModel.tbl_Supplier" Role="tbl_Supplier" Multiplicity="0..1" />
+          <End Type="PetrolPumpDbModel.tbl_Stock" Role="tbl_Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Supplier">
+              <PropertyRef Name="SupplierID" />
+            </Principal>
+            <Dependent Role="tbl_Stock">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PetrolPumpDbModelStoreContainer" CdmEntityContainer="PetrolPumpDbEntities">
+          <EntitySetMapping Name="tbl_Company">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Company">
+              <MappingFragment StoreEntitySet="tbl_Company">
+                <ScalarProperty Name="CompanyLogo" ColumnName="CompanyLogo" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Customer">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Customer">
+              <MappingFragment StoreEntitySet="tbl_Customer">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Employee">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Employee">
+              <MappingFragment StoreEntitySet="tbl_Employee">
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_EmployeeSalary">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_EmployeeSalary">
+              <MappingFragment StoreEntitySet="tbl_EmployeeSalary">
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="SalaryID" ColumnName="SalaryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Expense">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Expense">
+              <MappingFragment StoreEntitySet="tbl_Expense">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_FuelType">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_FuelType">
+              <MappingFragment StoreEntitySet="tbl_FuelType">
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="FuelType" ColumnName="FuelType" />
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Page">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Page">
+              <MappingFragment StoreEntitySet="tbl_Page">
+                <ScalarProperty Name="NavIcon" ColumnName="NavIcon" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PageSubTitle" ColumnName="PageSubTitle" />
+                <ScalarProperty Name="PageTitle" ColumnName="PageTitle" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Permission">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Permission">
+              <MappingFragment StoreEntitySet="tbl_Permission">
+                <ScalarProperty Name="Can_Delete" ColumnName="Can_Delete" />
+                <ScalarProperty Name="Can_Update" ColumnName="Can_Update" />
+                <ScalarProperty Name="Can_Add" ColumnName="Can_Add" />
+                <ScalarProperty Name="Can_View" ColumnName="Can_View" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Pump">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Pump">
+              <MappingFragment StoreEntitySet="tbl_Pump">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PumpFuelType">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_PumpFuelType">
+              <MappingFragment StoreEntitySet="tbl_PumpFuelType">
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="PumpFuelTypeID" ColumnName="PumpFuelTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Role">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Role">
+              <MappingFragment StoreEntitySet="tbl_Role">
+                <ScalarProperty Name="RoleSubTitle" ColumnName="RoleSubTitle" />
+                <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Sensor">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Sensor">
+              <MappingFragment StoreEntitySet="tbl_Sensor">
+                <ScalarProperty Name="FuelPresents" ColumnName="FuelPresents" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TankCapacity" ColumnName="TankCapacity" />
+                <ScalarProperty Name="TankTitle" ColumnName="TankTitle" />
+                <ScalarProperty Name="SensorMAC" ColumnName="SensorMAC" />
+                <ScalarProperty Name="FuelTypeID" ColumnName="FuelTypeID" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="SensorID" ColumnName="SensorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Stock">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Stock">
+              <MappingFragment StoreEntitySet="tbl_Stock">
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsSaled" ColumnName="IsSaled" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="IsPurchased" ColumnName="IsPurchased" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="SensorID" ColumnName="SensorID" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="StockID" ColumnName="StockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Supplier">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_Supplier">
+              <MappingFragment StoreEntitySet="tbl_Supplier">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_User">
+            <EntityTypeMapping TypeName="PetrolPumpDbModel.tbl_User">
+              <MappingFragment StoreEntitySet="tbl_User">
+                <ScalarProperty Name="PumpID" ColumnName="PumpID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

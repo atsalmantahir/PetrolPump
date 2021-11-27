@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a421ae0eb1984e0886a238d4a4f19a49" Name="Diagram1">
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Company" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Customer" Width="1.5" PointX="8.25" PointY="16.375" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Employee" Width="1.5" PointX="5.25" PointY="25.625" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_EmployeeSalary" Width="1.5" PointX="7.5" PointY="26" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Expense" Width="1.5" PointX="5.25" PointY="19" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_FuelType" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Page" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Permission" Width="1.5" PointX="5.25" PointY="15" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Pump" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_PumpFuelType" Width="1.5" PointX="5.25" PointY="7.375" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Role" Width="1.5" PointX="3" PointY="15.375" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Sensor" Width="1.5" PointX="8.25" PointY="10.75" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Stock" Width="1.5" PointX="10.5" PointY="15.875" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_Supplier" Width="1.5" PointX="5.25" PointY="21.875" />
+        <EntityTypeShape EntityType="PetrolPumpDbModel.tbl_User" Width="1.5" PointX="5.25" PointY="10.5" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Pump_tbl_Company" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Customer" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Employee_tbl_Pump" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_EmployeeSalary_tbl_Employee" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Expense_tbl_Pump" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_FuelType" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Sensor_tbl_FuelType" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Permission_tbl_Page" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Permission_tbl_Permission" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK__tbl_User__PumpID__4316F928" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK__tbl_User__PumpID__534D60F1" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_PumpFuelType_tbl_Pump" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Sensor_tbl_Pump" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Supplier_tbl_Pump" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_User_tbl_Role" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Sensor" />
+        <AssociationConnector Association="PetrolPumpDbModel.FK_tbl_Stock_tbl_Supplier" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

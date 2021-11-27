@@ -1,0 +1,135 @@
+﻿@model List<PetrolPump.Models.tbl_Sensor>
+@{
+    ViewBag.Title = "Index";
+    PetrolPump.Models.AppSession session = (PetrolPump.Models.AppSession)HttpContext.Current.Session["AppSession"];
+    var roleId = session.Role.RoleID;
+    bool canView = false;
+    bool canAdd = false;
+    bool canUpdate = false;
+    bool canDelete = false;
+    var rd = System.Web.HttpContext.Current.Request.RequestContext.RouteData;
+    string currentController = rd.GetRequiredString("controller");
+    var page = session.Page.Find(x => x.PageTitle == currentController);
+    var permissions = session.Role.tbl_Permission.Where(x => x.PageID == page.PageID && x.RoleID == roleId).FirstOrDefault();
+    if (permissions.Can_View == true)
+    {
+        canView = true;
+    }
+    if (permissions.Can_Add == true)
+    {
+        canAdd = true;
+    }
+    if (permissions.Can_Update == true)
+    {
+        canUpdate = true;
+    }
+    if (permissions.Can_Delete == true)
+    {
+        canDelete = true;
+    }
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Fuel Tanks/Sensor</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="breadcrumb-item active">Fuel Tanks/Sensor</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                Fuel Tanks/Sensor
+                            </h2>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <span class="pull-right">
+
+                                <a href="@Url.Action("AddFuelTank", "PetrolPumps")">Add New</a>
+                            </span>
+                            <table class="table table-bordered jqueryDataTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Company</th>
+                                        <th>Petrol Pump</th>
+                                        <th>Tank Title</th>
+                                        <th>Fuel Type</th>
+                                        <th>Sensor IP</th>
+                                        <th>Fuel Capacity</th>
+                                        <th>Fuel Present</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Count > 0)
+                                    {
+                                        int count = 1;
+                                        foreach (var item in Model)
+                                        {
+                                            var statusClass = "danger";
+                                            var statusText = "Activate";
+                                            if (item.IsActive == true)
+                                            {
+                                                statusClass = "success";
+                                                statusText = "Delete";
+                                            }
+                                            <tr>
+                                                <td>@count</td>
+                                                <td>@item.tbl_Pump.tbl_Company.CompanyName</td>
+                                                <td>@item.tbl_Pump.Location</td>
+                                                <td>@item.TankTitle</td>
+                                                <td>@item.tbl_FuelType.FuelType</td>
+                                                <td>@item.SensorMAC</td>
+                                                <td>@item.TankCapacity</td>
+                                                <td>@item.FuelPresents</td>
+                                                <td>
+                                                    <div class="btn-group-vertical">
+                                                        <a href="@Url.Action("EditFuelTank", "PetrolPumps", new { id = item.SensorID })" class="btn btn-default">Edit</a>
+                                                        <a href="#" onclick="UpdateStatus(@item.PumpID)" class="btn btn-default">@statusText</a>
+                                                    </div>
+                                                   
+                                                    
+                                                </td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="4">No Record Found</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+
